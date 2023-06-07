@@ -50,26 +50,26 @@ document.addEventListener("DOMContentLoaded", function() {
         var state = result.state;
         var city = result.city;
         var temperatureUnit = result.temperatureUnit;
-
+  
         if (!apiKey || !country || !state || !city) {
           weatherElement.innerHTML = "Please provide an API Key, Country, State, and City in the options.";
           return;
         }
-
+  
         var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state},${country}&appid=${apiKey}&units=metric`;
-
+  
         fetch(apiUrl)
           .then(response => response.json())
           .then(data => {
             var temperature = data.main.temp;
             var temperatureSymbol = temperatureUnit === "fahrenheit" ? "°F" : "°C";
-
+  
             if (temperatureUnit === "fahrenheit") {
               temperature = (temperature * 9 / 5) + 32;
             }
-
+  
             temperature = temperature.toFixed(1);
-
+  
             var weatherText = `Current temperature: ${temperature}${temperatureSymbol}`;
             weatherElement.textContent = weatherText;
           })
@@ -80,4 +80,5 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     );
   }
+  
 });
