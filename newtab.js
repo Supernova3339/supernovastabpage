@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Display the current time
   displayTime();
+  setInterval(displayTime, 1000); // Update time every second
 
   // Get the weather information
   getWeather();
