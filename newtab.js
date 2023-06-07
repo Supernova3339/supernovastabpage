@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
   var quoteElement = document.querySelector(".quote");
   var timeElement = document.querySelector(".time");
   var weatherElement = document.querySelector(".weather");
+  var containerElement = document.querySelector(".container");
+  var settingsIcon = document.querySelector(".settings-icon");
+  var popup = document.querySelector(".popup");
 
   // Fetch the quote
   fetchQuote();
@@ -12,6 +15,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Get the weather information
   getWeather();
+
+  settingsIcon.addEventListener("click", function() {
+    popup.classList.toggle("show");
+  });
 
   function fetchQuote() {
     fetch('https://zenquotes-proxy.supernova3339.workers.dev/')
@@ -70,10 +77,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
         var weatherText = `Current temperature: ${temperature}${temperatureSymbol}`;
         weatherElement.textContent = weatherText;
+
+        // Show the container after weather data is loaded
+        containerElement.classList.add("show");
       })
       .catch(error => {
         console.log("Error fetching weather:", error);
         weatherElement.innerHTML = "Failed to fetch weather data.";
+
+        // Show the container even if weather data fails to load
+        containerElement.classList.add("show");
       });
   }
 });
