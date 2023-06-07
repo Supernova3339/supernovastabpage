@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Supernova's Tab Page",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "service_worker": {
+    "script": "background.js",
+    "persistent": false
+  }
+}
+

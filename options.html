@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>New Tab Page Options</title>
+  <link rel="stylesheet" type="text/css" href="options.css">
+</head>
+
+<body>
+  <h1>New Tab Page Options</h1>
+
+  <form id="optionsForm">
+    <div class="optionItem">
+      <label for="apiKey">OpenWeatherMap API Key:</label>
+      <input type="text" id="apiKey" name="apiKey">
+    </div>
+    <div class="optionItem">
+      <label for="country">Country:</label>
+      <input type="text" id="country" name="country">
+    </div>
+    <div class="optionItem">
+      <label for="state">State:</label>
+      <input type="text" id="state" name="state">
+    </div>
+    <div class="optionItem">
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city">
+    </div>
+    <div class="optionItem">
+      <label for="temperatureUnit">Temperature Unit:</label>
+      <select id="temperatureUnit" name="temperatureUnit">
+        <option value="celsius">Celsius</option>
+        <option value="fahrenheit">Fahrenheit</option>
+      </select>
+    </div>
+    <div class="optionItem submitButton">
+      <button type="submit">Save</button>
+    </div>
+  </form>
+
+  <script src="options.js"></script>
+</body>
+
+</html>

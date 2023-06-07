@@ -1,0 +1,32 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: black;
+  }
+  
+  .quote {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .time {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .weather {
+    font-size: 24px;
+    color: white;
+  }
+   
