@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Supernova's Tab Page",
+  "version": "1.0.4",
   "description": "This is my custom tab page extension I built to increase my productivity.",
-  "version": "1.0.3",
   "permissions": [
     "storage",
     "scripting",
