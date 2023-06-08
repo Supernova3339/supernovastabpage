@@ -2,7 +2,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: black;
+    background-color: var(--wallpaper-color, black); /* Set the background color */
   }
   
   .container {
@@ -11,31 +11,30 @@ html, body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    background-color: black;
+    background-color: var(--wallpaper-color, black); /* Set the background color */
   }
   
   .quote {
     font-size: 24px;
-    color: white;
+    color: var(--text-color);
     margin-bottom: 20px;
   }
   
   .time {
     font-size: 48px;
-    color: white;
+    color: var(--text-color);
     margin-bottom: 20px;
   }
   
   .weather {
     font-size: 24px;
-    color: white;
+    color: var(--text-color);
   }
 
   .container {
     position: relative;
   }
   
-  .greeting,
   .quote,
   .time,
   .weather {
