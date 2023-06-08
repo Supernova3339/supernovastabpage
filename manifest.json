@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Supernova's Tab Page",
-  "version": "1.0.4",
   "description": "This is my custom tab page extension I built to increase my productivity.",
+  "version": "1.0.5",
   "permissions": [
     "storage",
     "scripting",
     "activeTab",
+    "topSites",
     "http://*/*",
     "https://*/*"
   ],
@@ -20,7 +21,7 @@
   },
   "options_ui": {
     "page": "options.html",
-    "open_in_tab": true
+    "open_in_tab": false
   },
   "icons": {
     "16": "icon16.png",

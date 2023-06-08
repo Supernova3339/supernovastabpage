@@ -16,33 +16,28 @@ html, body {
   
   .quote {
     font-size: 24px;
-    color: var(--text-color);
+    color: var(--text-color, white);
     margin-bottom: 20px;
   }
   
   .time {
     font-size: 48px;
-    color: var(--text-color);
+    color: var(--text-color, white);
     margin-bottom: 20px;
   }
   
   .weather {
     font-size: 24px;
-    color: var(--text-color);
+    color: var(--text-color, white);
+  }
+
+  .topSites {
+    font-size: 24px;
+    color: var(--text-color, white);
   }
 
   .container {
     position: relative;
-  }
-  
-  .quote,
-  .time,
-  .weather {
-    opacity: 0;
-    animation-name: fade-in;
-    animation-duration: 1s;
-    animation-delay: 0.5s;
-    animation-fill-mode: forwards;
   }
   
   @keyframes fade-in {
@@ -59,7 +54,14 @@ html, body {
     top: 10px;
     right: 10px;
     z-index: 9999;
+    opacity: 0;
+    animation-name: fade-in;
+    animation-duration: 1s;
+    animation-delay: 1.5s;
+    animation-fill-mode: forwards;
   }
+
+  /* POPUP */
   
   .popup {
     position: fixed;
@@ -67,8 +69,8 @@ html, body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    height: 300px;
-    background-color: #fff;
+    height: 425px;
+    background-color: var(--wallpaper-color, white);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     z-index: 9999;
     display: none;
@@ -82,4 +84,45 @@ html, body {
   
   .popup.show {
     display: block;
+  }
+
+  /* TOP SITES */
+
+  .top-sites {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr); /* Display 8 sites per row */
+    gap: 10px; /* Adjust the gap between site containers */
+  }
+  
+  .site-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Adjust the width of the site container */
+    height: 100px; /* Adjust the height of the site container */
+    background-color: var(--text-color, white); /* Set the background color of the site container */
+    border-radius: 10px; /* Apply rounded corners to the site container */
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .site-favicon {
+    width: 32px; /* Adjust the width of the favicon */
+    height: 32px; /* Adjust the height of the favicon */
+  }
+  
+  .site-title {
+    width: 100%;
+    margin-top: 5px; /* Adjust the margin between the favicon and the site title */
+    font-size: 12px; /* Adjust the font size of the site title */
+    color: var(--wallpaper-color, black); /* Set the color of the site title */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .container, .quote, .time, .weather, .top-sites {
+    opacity: 0;
+    animation: fade-in 1.5s ease-in-out forwards;
   }
