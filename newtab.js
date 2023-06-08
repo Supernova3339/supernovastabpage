@@ -50,14 +50,29 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function getWeather() {
-    var apiKey = localStorage.getItem("apiKey");
-    var country = localStorage.getItem("country");
-    var state = localStorage.getItem("state");
-    var city = localStorage.getItem("city");
-    var temperatureUnit = localStorage.getItem("temperatureUnit");
 
-    if (!apiKey || !country || !state || !city) {
-      weatherElement.innerHTML = "Please provide an API Key, Country, State, and City in the options.";
+    setTimeout(function() {
+      fetch('https://api.ip.sb/geoip')
+      .then(res => res.json())
+      .then(data => {
+          localStorage.setItem('city', data.city)
+          localStorage.setItem('state', data.region)
+          localStorage.setItem('country', data.country)
+      })
+      }, 5184000000);
+    const city = localStorage.getItem('city');
+    const state = localStorage.getItem('region');
+    const country = localStorage.getItem('country');
+
+    var apiKey = localStorage.getItem("apiKey");
+
+    var temperatureUnit = localStorage.getItem("temperatureUnit");
+    if(!temperatureUnit) {
+      localStorage.setItem('temperatureUnit', "Fahrenheit")
+    }
+
+    if (!apiKey) {
+      weatherElement.innerHTML = "Please provide an API Key in the options.";
       return;
     }
 
