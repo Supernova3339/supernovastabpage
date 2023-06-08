@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Tab Page Options</title>
   <link rel="stylesheet" href="options.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"></script>
 </head>
-
 <body>
   <div class="container">
     <h1 class="title">New Tab Page Options</h1>
@@ -32,13 +29,15 @@
         <label for="textColor" class="label">Text Color:</label>
         <input type="color" id="textColor" class="input">
       </div>
+      <div class="checkbox-container">
+        <label for="topSitesCheckbox" class="checkbox-label">Show Top Sites</label>
+        <input type="checkbox" id="toggleTopSites" class="checkbox">
+      </div>
       <div class="form-group">
         <button type="submit" class="optionItem button submitButton">Save Options</button>
       </div>
     </form>
   </div>
-
   <script src="options.js"></script>
 </body>
-
 </html>
