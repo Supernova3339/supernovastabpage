@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Get the weather information
   getWeather();
-
+  
   // Fetch the quote
   fetchQuote();
 
