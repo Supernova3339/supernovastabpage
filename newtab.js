@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
   var settingsIcon = document.querySelector(".settings-icon");
   var popup = document.querySelector(".popup");
 
-  // Fetch the quote
-  fetchQuote();
+  // Display colors
+  displayColors();
 
   // Display the current time
   displayTime();
@@ -16,9 +16,19 @@ document.addEventListener("DOMContentLoaded", function() {
   // Get the weather information
   getWeather();
 
+  sleep(2000);
+
+  // Fetch the quote
+  fetchQuote();
+
   settingsIcon.addEventListener("click", function() {
     popup.classList.toggle("show");
   });
+
+  function displayColors() {
+    containerElement.style.setProperty("--text-color", getTextColor());
+    containerElement.style.setProperty("--wallpaper-color", getWallpaperColor());
+  }
 
   function fetchQuote() {
     fetch('https://zenquotes-proxy.supernova3339.workers.dev/')
@@ -27,12 +37,15 @@ document.addEventListener("DOMContentLoaded", function() {
         var quote = data[0].q;
         var author = data[0].a;
 
-        var quoteText = `"${quote}" - ${author}`;
+        var quoteText = `"${quote}"`;
+        if (author) {
+          quoteText += ` - ${author}`;
+        }
+
         quoteElement.textContent = quoteText;
       })
       .catch(error => {
-        console.log("Error fetching quote:", error);
-        quoteElement.innerHTML = "Failed to fetch quote.";
+        console.log('Error fetching quote:', error);
       });
   }
 
@@ -50,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function getWeather() {
-
+    
     setTimeout(function() {
       fetch('https://api.ip.sb/geoip')
       .then(res => res.json())
@@ -70,38 +83,68 @@ document.addEventListener("DOMContentLoaded", function() {
     if(!temperatureUnit) {
       localStorage.setItem('temperatureUnit', "Fahrenheit")
     }
-
+  
     if (!apiKey) {
       weatherElement.innerHTML = "Please provide an API Key in the options.";
       return;
     }
-
+  
     var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state},${country}&appid=${apiKey}&units=metric`;
-
+  
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
         var temperature = data.main.temp;
         var temperatureSymbol = temperatureUnit === "fahrenheit" ? "°F" : "°C";
-
+        var description = data.weather[0].description;
+  
         if (temperatureUnit === "fahrenheit") {
           temperature = (temperature * 9 / 5) + 32;
         }
-
+  
         temperature = temperature.toFixed(1);
-
-        var weatherText = `Current temperature: ${temperature}${temperatureSymbol}`;
+  
+        var weatherText = `Current temperature: ${temperature}${temperatureSymbol} / ${description}`;
         weatherElement.textContent = weatherText;
-
+  
         // Show the container after weather data is loaded
         containerElement.classList.add("show");
       })
       .catch(error => {
         console.log("Error fetching weather:", error);
         weatherElement.innerHTML = "Failed to fetch weather data.";
-
+  
         // Show the container even if weather data fails to load
         containerElement.classList.add("show");
       });
   }
+
+  function getWallpaperColor() {
+    var wallpaperColor = localStorage.getItem("wallpaperColor");
+    return wallpaperColor || "#000000";
+  }
+
+  function getTextColor() {
+    var textColor = localStorage.getItem("textColor");
+    return textColor || "#ffffff";
+  }
+
+  const textColorInput = document.getElementById("textColor");
+
+  textColorInput.addEventListener("change", function () {
+    document.documentElement.style.setProperty(
+      "--text-color",
+      textColorInput.value
+    );
+  });
+
+  function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+  
+
 });
