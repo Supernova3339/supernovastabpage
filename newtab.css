@@ -3,7 +3,21 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: var(--wallpaper-color, black); /* Set the background color */
+    /*
+    background-image: url('https://source.unsplash.com/random?nature');
+    background-size:cover;
+    background-repeat: no-repeat;
+    */
   }
+
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  
+  /* STP CONTAINER CLASSES */
   
   .container {
     display: flex;
@@ -12,7 +26,14 @@ html, body {
     align-items: center;
     height: 100%;
     background-color: var(--wallpaper-color, black); /* Set the background color */
+    /*
+    background-image: url('https://source.unsplash.com/random?nature');
+    background-size:cover;
+    background-repeat: no-repeat;
+    */
   }
+
+  /* STP CONTAINER ELEMENTS */
   
   .quote {
     font-size: 24px;
