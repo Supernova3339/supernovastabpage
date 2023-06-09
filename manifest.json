@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Supernova's Tab Page",
   "description": "This is my custom tab page extension I built to increase my productivity.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "permissions": [
     "storage",
     "scripting",

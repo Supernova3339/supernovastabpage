@@ -10,9 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const toggleTopSitesInput = document.getElementById("toggleTopSites");
   var settingsIconElement = document.querySelector(".settings-icon");
 
-  // Set the toggleTopSites value to true
-  localStorage.setItem("toggleTopSites", "true");
-
   // Disable settings icon
   settingsIconElement.classList.add("disabled"); // Apply disabled styling
 
@@ -39,11 +36,10 @@ document.addEventListener("DOMContentLoaded", function() {
   settingsIconElement.classList.remove("disabled"); // Remove disabled styling
 
   if (settingsIcon && popup && !settingsIcon.classList.contains("disabled")) {
-    settingsIcon.addEventListener("click", function() {
-      popup.classList.toggle("show");
-    });
-  }
-  
+  settingsIcon.addEventListener("click", function() {
+    popup.classList.toggle("show");
+  });
+}
 
   function displayColors() {
     containerElement.style.setProperty("--text-color", getTextColor());
