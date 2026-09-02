@@ -158,33 +158,33 @@ body {
 
 .settings-caret {
   position: fixed;
-  /* Flush against the panel's own top edge (.settings-panel top: 58px) with
-     zero gap — previously there was a few px of daylight between the two,
-     showing a sliver of the page background as a visible "cut". */
+  /* A border-built triangle (transparent side-borders + a solid bottom
+     border) anti-aliases its diagonal seams against whatever's behind the
+     element — on a dark page that showed up as a faint light line right
+     where the caret met the panel. A solid square has no border at all, so
+     there's no seam to anti-alias: rotate it 45deg and sink it BELOW the
+     panel in stacking order (note z-index, lower than .settings-panel) so
+     the panel's own flat top edge cleanly covers its lower half, leaving
+     just the upper point poking out as the arrow. top/height are set so
+     the square's center lands exactly on the panel's top edge (58px).
+   */
   top: 50px;
-  right: 26px;
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid #ffffff;
-  filter: drop-shadow(0 -1px 1px rgba(0, 0, 0, 0.08));
-  z-index: 22;
-  /* A CSS transition takes its duration/easing from the state being
-     transitioned TO, so these two rules apply on the way out and the way
-     in respectively — matched exactly to settings-banner-out (160ms
-     ease-in) and settings-banner-in (220ms, same curve) below, so the
-     caret's recolor finishes in lockstep with the banner's own animation
-     instead of visibly finishing first. */
-  transition: border-bottom-color 160ms ease-in;
+  right: 22px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border: none;
+  transform: rotate(45deg);
+  z-index: 19;
+  transition: background-color 160ms ease-in;
 }
 
 /* When the save/reset banner is showing, the panel's top pixel row is green,
    not white — recolor the caret to match so it reads as one continuous
    shape instead of a white arrow pointing at a green bar. */
 .settings-caret.is-banner {
-  border-bottom-color: #4caf50;
-  transition: border-bottom-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: #4caf50;
+  transition: background-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Panel */
