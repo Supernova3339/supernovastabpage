@@ -170,7 +170,13 @@ body {
   border-bottom: 8px solid #ffffff;
   filter: drop-shadow(0 -1px 1px rgba(0, 0, 0, 0.08));
   z-index: 22;
-  transition: border-bottom-color 160ms ease;
+  /* A CSS transition takes its duration/easing from the state being
+     transitioned TO, so these two rules apply on the way out and the way
+     in respectively — matched exactly to settings-banner-out (160ms
+     ease-in) and settings-banner-in (220ms, same curve) below, so the
+     caret's recolor finishes in lockstep with the banner's own animation
+     instead of visibly finishing first. */
+  transition: border-bottom-color 160ms ease-in;
 }
 
 /* When the save/reset banner is showing, the panel's top pixel row is green,
@@ -178,6 +184,7 @@ body {
    shape instead of a white arrow pointing at a green bar. */
 .settings-caret.is-banner {
   border-bottom-color: #4caf50;
+  transition: border-bottom-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Panel */
