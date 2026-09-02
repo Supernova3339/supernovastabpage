@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const trigger = document.getElementById("settingsTrigger");
   const caret = document.getElementById("settingsCaret");
-  const panel = document.getElementById("settingsPanel");
+  const popover = document.getElementById("settingsPopover");
   const form = document.getElementById("settingsForm");
   const confirmBox = document.getElementById("settingsConfirm");
 
@@ -28,16 +28,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadWeather(settings);
 
   trigger.addEventListener("click", () => {
-    if (panel.hidden) openPanel();
+    if (popover.hidden) openPanel();
     else closePanel();
   });
 
   function openPanel() {
     clearTimeout(closeTimer);
-    panel.hidden = false;
-    caret.hidden = false;
-    panel.classList.remove("is-closing");
-    caret.classList.remove("is-closing");
+    popover.hidden = false;
+    popover.classList.remove("is-closing");
     trigger.classList.add("is-open");
     confirmBox.hidden = true;
     form.hidden = false;
@@ -45,12 +43,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function closePanel() {
     clearTimeout(closeTimer);
-    panel.classList.add("is-closing");
-    caret.classList.add("is-closing");
+    popover.classList.add("is-closing");
     trigger.classList.remove("is-open");
     closeTimer = setTimeout(() => {
-      panel.hidden = true;
-      caret.hidden = true;
+      popover.hidden = true;
     }, 130);
   }
 

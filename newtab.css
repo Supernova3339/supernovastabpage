@@ -151,35 +151,42 @@ body {
   background: rgba(120, 120, 120, 0.18);
 }
 
-/* Caret pointing from the trigger to the panel. A solid CSS triangle instead
-   of a rotated bordered square — it doesn't depend on lining up pixel-exact
-   with the panel's edge to read as an arrow, so it stays visible even if the
-   trigger's rendered height shifts slightly. */
+/* Popover wrapper — the caret and panel below are both its children,
+   positioned with `absolute` instead of each being an independent `fixed`
+   element. That used to mean two separately-animated boxes: same keyframes,
+   but each fading and scaling around its own transform-origin, which could
+   drift a px apart mid-animation and needed extra "hack" overlap to hide
+   it. Putting the single animation here instead means there is only ever
+   one fading/scaling box — the caret and panel move as one unit by
+   construction, not by coincidence — so the caret can go back to being a
+   plain triangle with no overlap tail. */
+
+.settings-popover {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 21;
+  animation: settings-pop-in 150ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: top right;
+}
+
+.settings-popover.is-closing {
+  animation: settings-pop-out 130ms ease-in both;
+}
+
+/* Caret pointing from the trigger to the panel — a solid clip-path triangle
+   with no border anywhere, so there's no diagonal seam to anti-alias. It
+   sits in the gap above the panel rather than overlapping it, so nothing
+   needs to cover any part of it for the shape to read correctly. */
 
 .settings-caret {
-  position: fixed;
-  /* Drawn with clip-path instead of borders or a rotated square tucked
-     behind the panel: a border-triangle anti-aliases a visible seam at the
-     diagonal edges, and a rotated square only reads as a triangle if
-     something else happens to cover exactly its bottom half. clip-path
-     clips this element's own solid background directly — there is no
-     border anywhere and no dependency on a neighboring element, so there's
-     nothing left to leave a seam. Flush against the panel's top edge
-     (.settings-panel top: 58px). */
+  position: absolute;
   top: 50px;
   right: 22px;
   width: 16px;
-  /* Twice the visible triangle's height: the top half is the pointed arrow,
-     the bottom half is a flat-sided "tail" that overlaps into the panel
-     (see the clip-path below) rather than stopping exactly at its edge.
-     Panel and caret share the same pop in/out animation but each scales
-     around its own transform-origin, so at mid-animation they can drift a
-     px or two apart right where they meet — the tail is spare overlap so
-     that gap never has anything to show through. */
-  height: 16px;
+  height: 8px;
   background: #ffffff;
-  clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
-  z-index: 22;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   transition: background-color 160ms ease-in;
 }
 
@@ -194,27 +201,15 @@ body {
 /* Panel */
 
 .settings-panel {
-  position: fixed;
+  position: absolute;
   top: 58px;
-  right: 10px;
+  right: 0;
   width: 288px;
   background: #ffffff;
   border: 1px solid #e2e2e2;
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  z-index: 21;
-}
-
-.settings-panel,
-.settings-caret {
-  animation: settings-pop-in 150ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  transform-origin: top right;
-}
-
-.settings-panel.is-closing,
-.settings-caret.is-closing {
-  animation: settings-pop-out 130ms ease-in both;
 }
 
 @keyframes settings-pop-in {
