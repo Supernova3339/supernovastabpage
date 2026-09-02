@@ -169,9 +169,16 @@ body {
   top: 50px;
   right: 22px;
   width: 16px;
-  height: 8px;
+  /* Twice the visible triangle's height: the top half is the pointed arrow,
+     the bottom half is a flat-sided "tail" that overlaps into the panel
+     (see the clip-path below) rather than stopping exactly at its edge.
+     Panel and caret share the same pop in/out animation but each scales
+     around its own transform-origin, so at mid-animation they can drift a
+     px or two apart right where they meet — the tail is spare overlap so
+     that gap never has anything to show through. */
+  height: 16px;
   background: #ffffff;
-  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
   z-index: 22;
   transition: background-color 160ms ease-in;
 }
