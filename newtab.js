@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const quoteEl = document.querySelector(".quote");
   const timeEl = document.querySelector(".time");
   const weatherEl = document.querySelector(".weather");
+  const weatherFeelsEl = document.getElementById("weatherFeels");
   const topSitesEl = document.querySelector(".top-sites");
   const containerEl = document.querySelector(".container");
 
@@ -92,9 +93,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         locationLon = resolved.lon;
       }
       const weather = await fetchWeather(locationLat, locationLon, current.tempUnit);
-      weatherEl.textContent = `${Math.round(weather.temperature)}${weather.unitSymbol} · ${describeWeatherCode(weather.weatherCode)}`;
+      const temp = Math.round(weather.temperature);
+      const feelsLike = Math.round(weather.feelsLike);
+      weatherEl.textContent = `${temp}${weather.unitSymbol} · ${describeWeatherCode(weather.weatherCode)}`;
+
+      // Only worth a second line when it actually says something the main
+      // line doesn't — a 1-degree difference is just noise.
+      if (Math.abs(feelsLike - temp) >= 2) {
+        weatherFeelsEl.textContent = `Feels like ${feelsLike}${weather.unitSymbol}`;
+        weatherFeelsEl.hidden = false;
+      } else {
+        weatherFeelsEl.hidden = true;
+      }
     } catch (err) {
       weatherEl.textContent = "Unable to load weather";
+      weatherFeelsEl.hidden = true;
     }
   }
 

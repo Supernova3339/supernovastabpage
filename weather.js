@@ -72,11 +72,12 @@ export async function setManualLocation(cityName) {
 
 export async function fetchWeather(lat, lon, unit) {
   const temperatureUnit = unit === "c" ? "celsius" : "fahrenheit";
-  const url = `${FORECAST_URL}?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&temperature_unit=${temperatureUnit}`;
+  const url = `${FORECAST_URL}?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&temperature_unit=${temperatureUnit}`;
   const res = await fetch(url);
   const data = await res.json();
   return {
     temperature: data.current.temperature_2m,
+    feelsLike: data.current.apparent_temperature,
     weatherCode: data.current.weather_code,
     unitSymbol: unit === "c" ? "°C" : "°F",
   };

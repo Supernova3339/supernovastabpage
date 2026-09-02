@@ -353,6 +353,11 @@
   font-weight: 500;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   animation: settings-banner-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  /* Both containers this sits in (.settings-panel, .options-card) round
+     their top corners at 12px — give the banner its own matching radius
+     instead of relying only on the parent's overflow:hidden clip, which can
+     leave a faint seam at the corner on some displays. */
+  border-radius: 12px 12px 0 0;
 }
 
 .settings-banner.is-closing {

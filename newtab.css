@@ -29,7 +29,10 @@ body {
   font-size: 24px;
   color: var(--text-color, white);
   text-align: center;
-  max-width: 560px;
+  /* Same idea as .top-sites: size off the real window width instead of a
+     flat cap, so a long quote gets to breathe on a normal desktop window
+     instead of wrapping into a narrow column. */
+  max-width: min(calc(100vw - 160px), 900px);
 }
 
 .time {
@@ -42,10 +45,18 @@ body {
   color: var(--text-color, white);
 }
 
+.weather-feels {
+  font-size: 15px;
+  color: var(--text-color, white);
+  opacity: 0.6;
+  margin-top: -8px;
+}
+
 .container,
 .quote,
 .time,
 .weather,
+.weather-feels,
 .top-sites {
   opacity: 0;
   animation: fade-in 1.5s ease-in-out forwards;
@@ -142,7 +153,10 @@ body {
 
 .settings-caret {
   position: fixed;
-  top: 46px;
+  /* Flush against the panel's own top edge (.settings-panel top: 58px) with
+     zero gap — previously there was a few px of daylight between the two,
+     showing a sliver of the page background as a visible "cut". */
+  top: 50px;
   right: 26px;
   width: 0;
   height: 0;
