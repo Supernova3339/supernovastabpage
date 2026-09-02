@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const trigger = document.getElementById("settingsTrigger");
   const caret = document.getElementById("settingsCaret");
   const popover = document.getElementById("settingsPopover");
+  const panel = document.getElementById("settingsPanel");
   const form = document.getElementById("settingsForm");
   const confirmBox = document.getElementById("settingsConfirm");
 
@@ -78,6 +79,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     // rule sets background directly, so it wins over this custom property
     // regardless of what it's set to).
     caret.style.setProperty("--caret-color", contrastColor(current.wallpaperColor));
+
+    // Same idea, applied to the whole settings panel instead of one
+    // element: a fixed white card barely separates from a light/white
+    // wallpaper, so flip it to the dark token set (settings.css) whenever
+    // the wallpaper is light enough that black would be the readable text
+    // color on it.
+    panel.classList.toggle("theme-dark", contrastColor(current.wallpaperColor) === "#000000");
   }
 
   function displayTime() {

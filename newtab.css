@@ -218,11 +218,12 @@ body {
   top: 58px;
   right: 0;
   width: 288px;
-  background: #ffffff;
+  background: var(--panel-bg, #ffffff);
   border: none;
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  transition: background-color 150ms ease;
 }
 
 @keyframes settings-pop-in {

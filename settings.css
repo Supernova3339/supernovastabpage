@@ -11,11 +11,55 @@
   display: none !important;
 }
 
+/* Panel color tokens. Everything below reads colors from these instead of
+   hardcoding them, so the whole panel can flip to a dark variant with one
+   class toggle. Brand/accent colors (the green save button and checkmarks,
+   the red reset/error colors) are NOT tokenized — they're already legible
+   against both a white and a dark panel, so they stay literal. */
+:where(.settings-panel, .options-card) {
+  --panel-bg: #ffffff;
+  --panel-text: #1a1a1a;
+  --panel-label: #767676;
+  --panel-muted: #999999;
+  --panel-muted-hover: #666666;
+  --panel-border: #dcdcdc;
+  --panel-placeholder: #b3b3b3;
+  --panel-field-bg: #f4f4f4;
+  --panel-field-hover-bg: #ebebeb;
+  --panel-checkbox-border: #cccccc;
+  --panel-checkbox-bg: #ffffff;
+  --panel-secondary-bg: #ffffff;
+  --panel-secondary-text: #333333;
+  --panel-unit-inactive: #b3b3b3;
+}
+
+/* Toggled in JS from contrastColor(wallpaperColor) — the same luminance
+   check that already picks the caret's and top-sites tile text's color —
+   so a light/white wallpaper flips the panel to this dark variant instead
+   of it staying a fixed white card that barely separates from the page. A
+   dark wallpaper keeps the light tokens above, unchanged. */
+:where(.settings-panel, .options-card).theme-dark {
+  --panel-bg: #1c1c1c;
+  --panel-text: #f2f2f2;
+  --panel-label: #9a9a9a;
+  --panel-muted: #8a8a8a;
+  --panel-muted-hover: #bbbbbb;
+  --panel-border: #3a3a3a;
+  --panel-placeholder: #6b6b6b;
+  --panel-field-bg: #262626;
+  --panel-field-hover-bg: #303030;
+  --panel-checkbox-border: #4a4a4a;
+  --panel-checkbox-bg: #262626;
+  --panel-secondary-bg: #262626;
+  --panel-secondary-text: #f2f2f2;
+  --panel-unit-inactive: #6b6b6b;
+}
+
 .settings-form,
 .settings-confirm {
   padding: 16px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #1a1a1a;
+  color: var(--panel-text);
 }
 
 .field {
@@ -26,7 +70,7 @@
   display: block;
   font-size: 11.5px;
   font-weight: 500;
-  color: #767676;
+  color: var(--panel-label);
   margin-bottom: 5px;
 }
 
@@ -45,9 +89,10 @@
   padding: 7px 9px;
   font-size: 13px;
   font-family: inherit;
-  border: 1px solid #dcdcdc;
+  border: 1px solid var(--panel-border);
   border-radius: 6px;
-  color: #1a1a1a;
+  color: var(--panel-text);
+  background: transparent;
   outline: none;
 }
 
@@ -56,7 +101,7 @@
 }
 
 .input::placeholder {
-  color: #b3b3b3;
+  color: var(--panel-placeholder);
 }
 
 /* Location */
@@ -66,7 +111,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 7px 9px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid var(--panel-border);
   border-radius: 6px;
 }
 
@@ -82,10 +127,10 @@
   align-items: center;
   gap: 7px;
   padding: 7px 9px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid var(--panel-border);
   border-radius: 6px;
   font-size: 12.5px;
-  color: #767676;
+  color: var(--panel-label);
 }
 
 .location-edit {
@@ -104,8 +149,8 @@
 }
 
 .pin-button {
-  background: #f4f4f4;
-  border: 1px solid #dcdcdc;
+  background: var(--panel-field-bg);
+  border: 1px solid var(--panel-border);
   border-radius: 6px;
   width: 34px;
   height: 34px;
@@ -113,12 +158,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #555;
+  color: var(--panel-label);
   flex-shrink: 0;
 }
 
 .pin-button:hover {
-  background: #ebebeb;
+  background: var(--panel-field-hover-bg);
 }
 
 .spin {
@@ -146,16 +191,16 @@
   font-size: 13px;
   font-family: inherit;
   cursor: pointer;
-  color: #b3b3b3;
+  color: var(--panel-unit-inactive);
 }
 
 .unit-option.is-active {
-  color: #1a1a1a;
+  color: var(--panel-text);
   font-weight: 600;
 }
 
 .unit-sep {
-  color: #ccc;
+  color: var(--panel-border);
 }
 
 /* Colors */
@@ -171,7 +216,7 @@
 
 .color-input {
   appearance: none;
-  border: 1px solid #dcdcdc;
+  border: 1px solid var(--panel-border);
   border-radius: 8px;
   width: 100%;
   height: 44px;
@@ -194,7 +239,7 @@
   margin-top: 4px;
   font-size: 10.5px;
   font-family: ui-monospace, monospace;
-  color: #999;
+  color: var(--panel-muted);
   text-align: center;
 }
 
@@ -221,8 +266,8 @@
   width: 16px;
   height: 16px;
   border-radius: 5px;
-  border: 1.5px solid #cccccc;
-  background: #ffffff;
+  border: 1.5px solid var(--panel-checkbox-border);
+  background: var(--panel-checkbox-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,7 +290,7 @@
 
 .checkbox-row span:last-child {
   font-size: 12px;
-  color: #333;
+  color: var(--panel-text);
 }
 
 /* Buttons */
@@ -278,9 +323,9 @@
 .btn-secondary {
   flex: 1;
   padding: 7px;
-  border: 1px solid #dcdcdc;
-  background: #fff;
-  color: #333;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-secondary-bg);
+  color: var(--panel-secondary-text);
   font-size: 12.5px;
 }
 
@@ -309,12 +354,12 @@
 }
 
 .link-button.muted {
-  color: #999;
+  color: var(--panel-muted);
   font-size: 11px;
 }
 
 .link-button.muted:hover {
-  color: #666;
+  color: var(--panel-muted-hover);
   text-decoration: underline;
 }
 
@@ -324,7 +369,7 @@
   margin: 0 0 14px 0;
   font-size: 13px;
   line-height: 1.4;
-  color: #333;
+  color: var(--panel-text);
 }
 
 .settings-confirm-actions {
@@ -335,7 +380,9 @@
 /* Save/reset banner — absolutely positioned so it overlays the top of its
    container instead of pushing the form down when it appears/disappears.
    The container (`.settings-panel` or `.options-card`) must be a
-   positioning context (position: relative/fixed). */
+   positioning context (position: relative/fixed). Stays green/white in
+   both light and dark panel modes — it's already high-contrast either way,
+   no token needed. */
 
 .settings-banner {
   position: absolute;
