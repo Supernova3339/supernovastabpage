@@ -69,6 +69,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     containerEl.style.setProperty("--site-color", current.siteColor);
     containerEl.style.setProperty("--site-text-color", contrastColor(current.siteColor));
     trigger.style.color = current.textColor;
+
+    // The caret's visible tip sits in the gap between the trigger and the
+    // panel, on bare wallpaper — not on the panel itself — so a hardcoded
+    // white fill disappears on a white/light wallpaper the same way the
+    // site tiles would without their own contrast fix above. .is-banner
+    // still overrides this with green while the banner's showing (that
+    // rule sets background directly, so it wins over this custom property
+    // regardless of what it's set to).
+    caret.style.setProperty("--caret-color", contrastColor(current.wallpaperColor));
   }
 
   function displayTime() {

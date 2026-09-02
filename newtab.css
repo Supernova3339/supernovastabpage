@@ -194,7 +194,11 @@ body {
   right: 22px;
   width: 16px;
   height: 16px;
-  background: #ffffff;
+  /* --caret-color is computed in JS from the wallpaper color's luminance
+     (same trick as --site-text-color) — the visible tip sits on bare
+     wallpaper, not on the panel, so a hardcoded white disappeared on a
+     white/light wallpaper. */
+  background: var(--caret-color, #ffffff);
   clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
   transition: background-color 160ms ease-in;
 }
