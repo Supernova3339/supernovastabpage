@@ -1,43 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Tab Page Options</title>
+  <title>Supernova's Tab Page — Settings</title>
   <link rel="stylesheet" href="options.css">
 </head>
+
 <body>
-  <div class="container">
-    <h1 class="title">New Tab Page Options</h1>
-    <form id="options-form" class="form">
-      <div class="form-group">
-        <label for="apiKey" class="label">OpenWeatherMap API Key:</label>
-        <input type="text" id="apiKey" class="input" placeholder="API Key">
+  <div class="options-card">
+    <h1 class="options-title">Settings</h1>
+
+    <div class="settings-banner" id="settingsBanner" hidden>
+      <div class="settings-banner-message">
+        <svg width="13" height="13" viewBox="0 0 24 24" stroke-width="3" stroke="#ffffff" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12l4 4l10 -10" />
+        </svg>
+        <span id="settingsBannerText"></span>
       </div>
-      <div class="form-group">
-        <label for="temperatureUnit" class="label">Temperature Unit:</label>
-        <select id="temperatureUnit" class="select">
-          <option value="celsius">Celsius</option>
-          <option value="fahrenheit">Fahrenheit</option>
-        </select>
+      <button class="settings-banner-close" id="settingsBannerClose" aria-label="Dismiss">
+        <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6l-12 12" />
+          <path d="M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="settings-confirm" id="settingsConfirm" hidden>
+      <p>Reset all settings to defaults? This can&rsquo;t be undone.</p>
+      <div class="settings-confirm-actions">
+        <button type="button" class="btn btn-secondary" id="resetCancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="resetConfirm">Reset</button>
       </div>
-      <div class="form-group">
-        <label for="wallpaperColor" class="label">Wallpaper Color:</label>
-        <input type="color" id="wallpaperColor" class="input">
+    </div>
+
+    <form class="settings-form" id="settingsForm">
+      <div class="field">
+        <label class="label">Location</label>
+
+        <div class="location-display" id="locationDisplay" hidden>
+          <div class="location-display-text">
+            <svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="#4CAF50" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+              <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+            </svg>
+            <span id="locationLabel"></span>
+          </div>
+          <button type="button" class="link-button" id="locationChange">Change</button>
+        </div>
+
+        <div class="location-detecting" id="locationDetecting" hidden>
+          <svg class="spin" width="13" height="13" viewBox="0 0 24 24" stroke-width="2.5" stroke="#4CAF50"
+            fill="none" stroke-linecap="round">
+            <path d="M12 3a9 9 0 1 0 9 9" />
+          </svg>
+          <span>Detecting your location&hellip;</span>
+        </div>
+
+        <div class="location-edit" id="locationEdit" hidden>
+          <input type="text" id="locationInput" class="input" placeholder="Enter a city">
+          <button type="button" class="pin-button" id="locationDetect" aria-label="Use my location">
+            <svg width="15" height="15" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+              <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+            </svg>
+          </button>
+        </div>
+        <p class="field-error" id="locationError" hidden></p>
       </div>
-      <div class="form-group">
-        <label for="textColor" class="label">Text Color:</label>
-        <input type="color" id="textColor" class="input">
+
+      <div class="field field-row">
+        <span class="label label-inline">Units</span>
+        <div class="unit-toggle">
+          <button type="button" class="unit-option" id="unitF">&deg;F</button>
+          <span class="unit-sep">/</span>
+          <button type="button" class="unit-option" id="unitC">&deg;C</button>
+        </div>
       </div>
-      <div class="checkbox-container">
-        <label for="topSitesCheckbox" class="checkbox-label">Show Top Sites</label>
-        <input type="checkbox" id="toggleTopSites" class="checkbox">
+
+      <div class="field field-colors">
+        <div>
+          <label class="label" for="wallpaperColor">Wallpaper</label>
+          <input type="color" id="wallpaperColor" class="color-input">
+          <span class="hex-readout" id="wallpaperHex"></span>
+        </div>
+        <div>
+          <label class="label" for="textColor">Text</label>
+          <input type="color" id="textColor" class="color-input">
+          <span class="hex-readout" id="textHex"></span>
+        </div>
       </div>
-      <div class="form-group">
-        <button type="submit" class="optionItem button submitButton">Save Options</button>
+
+      <div class="field">
+        <label class="checkbox-row">
+          <input type="checkbox" id="showTopSites">
+          <span class="checkbox-box" id="showTopSitesBox">
+            <svg width="10" height="10" viewBox="0 0 24 24" stroke-width="3.5" stroke="#ffffff" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l4 4l10 -10" />
+            </svg>
+          </span>
+          <span>Show top sites</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Save</button>
+
+      <div class="settings-footer">
+        <button type="button" class="link-button muted" id="resetOpen">Reset to defaults</button>
       </div>
     </form>
   </div>
-  <script src="options.js"></script>
+
+  <script type="module" src="options.js"></script>
 </body>
+
 </html>

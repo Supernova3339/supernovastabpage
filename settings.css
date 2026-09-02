@@ -1,0 +1,387 @@
+/* Shared by newtab.css (the anchored dropdown) and options.css (the standalone
+   options page) — the same settings fields render in both places. */
+
+.settings-form,
+.settings-confirm {
+  padding: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a1a;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #767676;
+  margin-bottom: 5px;
+}
+
+.label-inline {
+  margin-bottom: 0;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input {
+  width: 100%;
+  padding: 7px 9px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  color: #1a1a1a;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #4caf50;
+}
+
+.input::placeholder {
+  color: #b3b3b3;
+}
+
+/* Location */
+
+.location-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 9px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+}
+
+.location-display-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.location-detecting {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: #767676;
+}
+
+.location-edit {
+  display: flex;
+  gap: 6px;
+}
+
+.location-edit .input {
+  flex: 1;
+}
+
+.field-error {
+  margin: 6px 0 0 0;
+  font-size: 11px;
+  color: #d9534f;
+}
+
+.pin-button {
+  background: #f4f4f4;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.pin-button:hover {
+  background: #ebebeb;
+}
+
+.spin {
+  animation: settings-spin 0.8s linear infinite;
+}
+
+@keyframes settings-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Units */
+
+.unit-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.unit-option {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  color: #b3b3b3;
+}
+
+.unit-option.is-active {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.unit-sep {
+  color: #ccc;
+}
+
+/* Colors */
+
+.field-colors {
+  display: flex;
+  gap: 10px;
+}
+
+.field-colors > div {
+  flex: 1;
+}
+
+.color-input {
+  appearance: none;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  width: 100%;
+  height: 44px;
+  padding: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 5px;
+}
+
+.hex-readout {
+  display: block;
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-family: ui-monospace, monospace;
+  color: #999;
+  text-align: center;
+}
+
+/* Checkbox */
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-row input {
+  position: absolute;
+  opacity: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.checkbox-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  border: 1.5px solid #cccccc;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.checkbox-box svg {
+  display: none;
+}
+
+.checkbox-box.is-checked {
+  border-color: #4caf50;
+  background: #4caf50;
+}
+
+.checkbox-box.is-checked svg {
+  display: block;
+}
+
+.checkbox-row span:last-child {
+  font-size: 12px;
+  color: #333;
+}
+
+/* Buttons */
+
+.btn {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-primary {
+  background: #4caf50;
+  color: #fff;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: #45a049;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 7px;
+  border: 1px solid #dcdcdc;
+  background: #fff;
+  color: #333;
+  font-size: 12.5px;
+}
+
+.btn-danger {
+  flex: 1;
+  padding: 7px;
+  background: #d9534f;
+  color: #fff;
+  font-size: 12.5px;
+}
+
+.settings-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 11.5px;
+  color: #4caf50;
+  cursor: pointer;
+}
+
+.link-button.muted {
+  color: #999;
+  font-size: 11px;
+}
+
+.link-button.muted:hover {
+  color: #666;
+  text-decoration: underline;
+}
+
+/* Reset confirmation */
+
+.settings-confirm p {
+  margin: 0 0 14px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.settings-confirm-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Save/reset banner — absolutely positioned so it overlays the top of its
+   container instead of pushing the form down when it appears/disappears.
+   The container (`.settings-panel` or `.options-card`) must be a
+   positioning context (position: relative/fixed). */
+
+.settings-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: #4caf50;
+  color: #fff;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  animation: settings-banner-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.settings-banner.is-closing {
+  animation: settings-banner-out 160ms ease-in both;
+}
+
+.settings-banner-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-banner-close {
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  display: flex;
+}
+
+@keyframes settings-banner-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes settings-banner-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}

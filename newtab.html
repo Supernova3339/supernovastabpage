@@ -5,37 +5,141 @@
   <title>New Tab</title>
   <link rel="stylesheet" type="text/css" href="newtab.css">
   <meta charset="UTF-8">
-  <style id="custom-styles"></style>
 </head>
 
 <body>
 
-  
   <div class="container">
     <div class="quote"></div>
     <div class="time"></div>
     <div class="weather"></div>
-    <br><br><br>
     <div class="top-sites"></div>
   </div>
 
-  <div class="settings-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-settings" width="24" height="24"
-      viewBox="0 0 24 24" stroke-width="2" stroke="white" fill="none" stroke-linecap="round"
-      stroke-linejoin="round">
+  <button class="settings-trigger" id="settingsTrigger" aria-label="Toggle settings">
+    <svg width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+      stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
       <path
         d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z">
       </path>
       <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
     </svg>
+  </button>
+
+  <div class="settings-caret" id="settingsCaret" hidden></div>
+
+  <div class="settings-panel" id="settingsPanel" hidden>
+
+    <div class="settings-banner" id="settingsBanner" hidden>
+      <div class="settings-banner-message">
+        <svg width="13" height="13" viewBox="0 0 24 24" stroke-width="3" stroke="#ffffff" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12l4 4l10 -10" />
+        </svg>
+        <span id="settingsBannerText"></span>
+      </div>
+      <button class="settings-banner-close" id="settingsBannerClose" aria-label="Dismiss">
+        <svg width="12" height="12" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" fill="none"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6l-12 12" />
+          <path d="M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="settings-confirm" id="settingsConfirm" hidden>
+      <p>Reset all settings to defaults? This can&rsquo;t be undone.</p>
+      <div class="settings-confirm-actions">
+        <button type="button" class="btn btn-secondary" id="resetCancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="resetConfirm">Reset</button>
+      </div>
+    </div>
+
+    <form class="settings-form" id="settingsForm">
+      <div class="field">
+        <label class="label">Location</label>
+
+        <div class="location-display" id="locationDisplay" hidden>
+          <div class="location-display-text">
+            <svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="#4CAF50" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+              <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+            </svg>
+            <span id="locationLabel"></span>
+          </div>
+          <button type="button" class="link-button" id="locationChange">Change</button>
+        </div>
+
+        <div class="location-detecting" id="locationDetecting" hidden>
+          <svg class="spin" width="13" height="13" viewBox="0 0 24 24" stroke-width="2.5" stroke="#4CAF50"
+            fill="none" stroke-linecap="round">
+            <path d="M12 3a9 9 0 1 0 9 9" />
+          </svg>
+          <span>Detecting your location&hellip;</span>
+        </div>
+
+        <div class="location-edit" id="locationEdit" hidden>
+          <input type="text" id="locationInput" class="input" placeholder="Enter a city">
+          <button type="button" class="pin-button" id="locationDetect" aria-label="Use my location">
+            <svg width="15" height="15" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+              <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+            </svg>
+          </button>
+        </div>
+        <p class="field-error" id="locationError" hidden></p>
+      </div>
+
+      <div class="field field-row">
+        <span class="label label-inline">Units</span>
+        <div class="unit-toggle">
+          <button type="button" class="unit-option" id="unitF">&deg;F</button>
+          <span class="unit-sep">/</span>
+          <button type="button" class="unit-option" id="unitC">&deg;C</button>
+        </div>
+      </div>
+
+      <div class="field field-colors">
+        <div>
+          <label class="label" for="wallpaperColor">Wallpaper</label>
+          <input type="color" id="wallpaperColor" class="color-input">
+          <span class="hex-readout" id="wallpaperHex"></span>
+        </div>
+        <div>
+          <label class="label" for="textColor">Text</label>
+          <input type="color" id="textColor" class="color-input">
+          <span class="hex-readout" id="textHex"></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="checkbox-row">
+          <input type="checkbox" id="showTopSites">
+          <span class="checkbox-box" id="showTopSitesBox">
+            <svg width="10" height="10" viewBox="0 0 24 24" stroke-width="3.5" stroke="#ffffff" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12l4 4l10 -10" />
+            </svg>
+          </span>
+          <span>Show top sites</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Save</button>
+
+      <div class="settings-footer">
+        <button type="button" class="link-button muted" id="resetOpen">Reset to defaults</button>
+      </div>
+    </form>
+
   </div>
 
-  <div class="popup">
-    <iframe src="options.html"></iframe>
-  </div>
-
-  <script src="newtab.js"></script>
+  <script type="module" src="newtab.js"></script>
 </body>
 
 </html>
