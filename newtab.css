@@ -158,24 +158,21 @@ body {
 
 .settings-caret {
   position: fixed;
-  /* A border-built triangle (transparent side-borders + a solid bottom
-     border) anti-aliases its diagonal seams against whatever's behind the
-     element — on a dark page that showed up as a faint light line right
-     where the caret met the panel. A solid square has no border at all, so
-     there's no seam to anti-alias: rotate it 45deg and sink it BELOW the
-     panel in stacking order (note z-index, lower than .settings-panel) so
-     the panel's own flat top edge cleanly covers its lower half, leaving
-     just the upper point poking out as the arrow. top/height are set so
-     the square's center lands exactly on the panel's top edge (58px).
-   */
+  /* Drawn with clip-path instead of borders or a rotated square tucked
+     behind the panel: a border-triangle anti-aliases a visible seam at the
+     diagonal edges, and a rotated square only reads as a triangle if
+     something else happens to cover exactly its bottom half. clip-path
+     clips this element's own solid background directly — there is no
+     border anywhere and no dependency on a neighboring element, so there's
+     nothing left to leave a seam. Flush against the panel's top edge
+     (.settings-panel top: 58px). */
   top: 50px;
   right: 22px;
   width: 16px;
-  height: 16px;
+  height: 8px;
   background: #ffffff;
-  border: none;
-  transform: rotate(45deg);
-  z-index: 19;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  z-index: 22;
   transition: background-color 160ms ease-in;
 }
 

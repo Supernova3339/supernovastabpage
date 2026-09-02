@@ -42,15 +42,22 @@ async function geocode(query) {
   return { label, lat: match.latitude, lon: match.longitude };
 }
 
-// Auto-detect: resolve an approximate city from IP, then geocode that city to
-// coordinates in the same call, so callers get one clean {label, lat, lon}
-// result instead of juggling city/region/country strings themselves.
+// Auto-detect: ip.sb's geoip response already includes latitude/longitude,
+// so this uses those directly instead of building a "City, Region, Country"
+// string and asking Open-Meteo's geocoder to resolve it back to coordinates
+// - that extra round trip was a real failure point (a query the geocoder
+// couldn't match killed the whole thing on first launch) and was never
+// actually necessary here. Geocoding text is still the right tool for the
+// manual "type a city" path below, where turning free text into coordinates
+// is the entire point.
 export async function detectLocation() {
   const res = await fetch(GEO_IP_URL);
   const data = await res.json();
-  const query = [data.city, data.region, data.country].filter(Boolean).join(", ");
-  const resolved = await geocode(query || data.city);
-  if (!resolved) throw new Error("Could not resolve detected location");
+  if (data.latitude == null || data.longitude == null) {
+    throw new Error("IP geolocation did not return coordinates");
+  }
+  const label = [data.city, data.region || data.country].filter(Boolean).join(", ");
+  const resolved = { label, lat: data.latitude, lon: data.longitude };
   await setSettings({
     location: resolved.label,
     locationLat: resolved.lat,
