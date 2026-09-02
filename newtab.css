@@ -175,18 +175,27 @@ body {
 }
 
 /* Caret pointing from the trigger to the panel — a solid clip-path triangle
-   with no border anywhere, so there's no diagonal seam to anti-alias. It
-   sits in the gap above the panel rather than overlapping it, so nothing
-   needs to cover any part of it for the shape to read correctly. */
+   with no border anywhere, so there's no diagonal seam to anti-alias.
+   Sharing one animated parent with the panel (see .settings-popover above)
+   stops them drifting apart, but two adjacent sibling elements can still
+   round to slightly different sub-pixel positions during the scale/opacity
+   transform and leave a hairline gap right where they meet. The visible
+   triangle is unchanged (top 8px, same size as before) but the box is
+   taller than that: the extra height below it is a flat-sided tail that
+   extends down into the panel's own space as overlap insurance. It has no
+   z-index set, so — same as any two unpositioned-for-stacking siblings —
+   DOM order decides, and .settings-panel (declared after this in the
+   markup) naturally paints over it. Don't add a z-index here; that's what
+   made the tail visible as a stray rectangle last time. */
 
 .settings-caret {
   position: absolute;
   top: 50px;
   right: 22px;
   width: 16px;
-  height: 8px;
+  height: 16px;
   background: #ffffff;
-  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
   transition: background-color 160ms ease-in;
 }
 
@@ -206,7 +215,7 @@ body {
   right: 0;
   width: 288px;
   background: #ffffff;
-  border: 1px solid #e2e2e2;
+  border: none;
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
