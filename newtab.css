@@ -63,11 +63,16 @@ body {
 /* Top sites */
 
 .top-sites {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 100px);
   justify-content: center;
   gap: 10px;
-  max-width: 700px;
+  /* Use the real window width (minus a side buffer) instead of a flat cap,
+     so all 9 tiles sit on one row on a normal desktop window instead of
+     wrapping into an unbalanced 6-then-3 stack. Grid (not flex-wrap) keeps
+     any rows that do wrap aligned to shared columns instead of each row
+     centering itself independently. */
+  max-width: min(calc(100vw - 120px), 1200px);
 }
 
 .site-container {
@@ -118,33 +123,41 @@ body {
   animation: fade-in 1s ease-in-out forwards;
   animation-delay: 1.5s;
   transition: background 0.12s ease;
+  /* Without this, the inline SVG adds a few px of baseline whitespace below
+     itself, making the button taller than its padding+icon math and
+     throwing off the caret/panel spacing below. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .settings-trigger.is-open {
   background: rgba(120, 120, 120, 0.18);
 }
 
-/* Caret pointing from the trigger to the panel */
+/* Caret pointing from the trigger to the panel. A solid CSS triangle instead
+   of a rotated bordered square — it doesn't depend on lining up pixel-exact
+   with the panel's edge to read as an arrow, so it stays visible even if the
+   trigger's rendered height shifts slightly. */
 
 .settings-caret {
   position: fixed;
-  top: 45px;
-  right: 24px;
-  width: 14px;
-  height: 14px;
-  background: #ffffff;
-  border-left: 1px solid #e2e2e2;
-  border-top: 1px solid #e2e2e2;
-  transform: rotate(45deg);
-  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.04);
-  z-index: 21;
+  top: 46px;
+  right: 26px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #ffffff;
+  filter: drop-shadow(0 -1px 1px rgba(0, 0, 0, 0.08));
+  z-index: 22;
 }
 
 /* Panel */
 
 .settings-panel {
   position: fixed;
-  top: 51px;
+  top: 58px;
   right: 10px;
   width: 288px;
   background: #ffffff;

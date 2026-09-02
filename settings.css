@@ -1,6 +1,16 @@
 /* Shared by newtab.css (the anchored dropdown) and options.css (the standalone
    options page) — the same settings fields render in both places. */
 
+/* Several rules below set `display` on elements that are also toggled via the
+   `hidden` attribute (the banner, the three location states). An explicit
+   `display` in a stylesheet silently outranks the browser's built-in
+   `[hidden] { display: none }` rule, so without this every one of those
+   elements would render regardless of `.hidden` — this keeps `hidden` in
+   charge no matter what `display` a class sets. */
+[hidden] {
+  display: none !important;
+}
+
 .settings-form,
 .settings-confirm {
   padding: 16px;
