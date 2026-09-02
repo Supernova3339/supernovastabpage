@@ -93,7 +93,12 @@ body {
   justify-content: center;
   width: 100px;
   height: 100px;
-  background-color: #ffffff;
+  /* Independent of --wallpaper-color/--text-color on purpose — tying tile
+     colors to the page theme is what caused the old contrast bug (pick two
+     similar colors and the tiles go unreadable). --site-text-color is
+     computed in JS from --site-color's luminance instead, so any color the
+     user picks here stays readable no matter what. */
+  background-color: var(--site-color, #ffffff);
   border-radius: 10px;
   text-align: center;
   overflow: hidden;
@@ -110,7 +115,7 @@ body {
   width: 100%;
   margin-top: 5px;
   font-size: 12px;
-  color: #000000;
+  color: var(--site-text-color, #000000);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -165,6 +170,14 @@ body {
   border-bottom: 8px solid #ffffff;
   filter: drop-shadow(0 -1px 1px rgba(0, 0, 0, 0.08));
   z-index: 22;
+  transition: border-bottom-color 160ms ease;
+}
+
+/* When the save/reset banner is showing, the panel's top pixel row is green,
+   not white — recolor the caret to match so it reads as one continuous
+   shape instead of a white arrow pointing at a green bar. */
+.settings-caret.is-banner {
+  border-bottom-color: #4caf50;
 }
 
 /* Panel */

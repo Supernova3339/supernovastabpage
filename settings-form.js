@@ -5,7 +5,7 @@ import { detectLocation, setManualLocation } from "./weather.js";
 // anchored dropdown on the new tab page) or inside the standalone options
 // page — both pages ship the same markup for these fields, so this is the
 // one place that logic is written.
-export async function mountSettingsForm({ onSaved, onReset, onThemeChange } = {}) {
+export async function mountSettingsForm({ onSaved, onReset, onThemeChange, onBannerChange } = {}) {
   const banner = document.getElementById("settingsBanner");
   const bannerText = document.getElementById("settingsBannerText");
   const bannerClose = document.getElementById("settingsBannerClose");
@@ -29,8 +29,10 @@ export async function mountSettingsForm({ onSaved, onReset, onThemeChange } = {}
   const unitC = document.getElementById("unitC");
   const wallpaperInput = document.getElementById("wallpaperColor");
   const textInput = document.getElementById("textColor");
+  const siteInput = document.getElementById("siteColor");
   const wallpaperHex = document.getElementById("wallpaperHex");
   const textHex = document.getElementById("textHex");
+  const siteHex = document.getElementById("siteColorHex");
   const topSitesCheckbox = document.getElementById("showTopSites");
   const topSitesBox = document.getElementById("showTopSitesBox");
 
@@ -42,12 +44,14 @@ export async function mountSettingsForm({ onSaved, onReset, onThemeChange } = {}
     bannerText.textContent = message;
     banner.hidden = false;
     banner.classList.remove("is-closing");
+    onBannerChange && onBannerChange(true);
     bannerTimer = setTimeout(hideBanner, 2000);
   }
 
   function hideBanner(immediate) {
     clearTimeout(bannerTimer);
     if (banner.hidden) return;
+    onBannerChange && onBannerChange(false);
     if (immediate) {
       banner.hidden = true;
       return;
@@ -132,6 +136,12 @@ export async function mountSettingsForm({ onSaved, onReset, onThemeChange } = {}
     onThemeChange && onThemeChange(settings);
   });
 
+  siteInput.addEventListener("input", () => {
+    settings.siteColor = siteInput.value;
+    siteHex.textContent = siteInput.value;
+    onThemeChange && onThemeChange(settings);
+  });
+
   function renderCheckbox() {
     topSitesCheckbox.checked = settings.showTopSites;
     topSitesBox.classList.toggle("is-checked", settings.showTopSites);
@@ -147,10 +157,32 @@ export async function mountSettingsForm({ onSaved, onReset, onThemeChange } = {}
     renderUnits();
     wallpaperInput.value = settings.wallpaperColor;
     textInput.value = settings.textColor;
+    siteInput.value = settings.siteColor;
     wallpaperHex.textContent = settings.wallpaperColor;
     textHex.textContent = settings.textColor;
+    siteHex.textContent = settings.siteColor;
     renderCheckbox();
   }
+
+  // The panel reads storage once at mount time, but the new-tab page also
+  // auto-detects a location in the background on first launch and writes it
+  // back afterward — without this, a panel that was already open (or opened
+  // while that detection is still in flight) never finds out and is stuck
+  // showing the stale/empty location. Skipped while the user has the manual
+  // input focused so an incoming write can't clobber what they're typing.
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== "sync") return;
+    let locationChanged = false;
+    for (const key of ["location", "locationLat", "locationLon"]) {
+      if (key in changes) {
+        settings[key] = changes[key].newValue;
+        locationChanged = true;
+      }
+    }
+    if (locationChanged && document.activeElement !== locationInput) {
+      renderLocationState();
+    }
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();

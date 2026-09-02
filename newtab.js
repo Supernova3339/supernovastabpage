@@ -54,9 +54,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 130);
   }
 
+  // Picks black or white text for a given tile background by luminance, so
+  // whatever color the user chooses for site tiles stays readable — unlike
+  // the page's own wallpaper/text colors, which the user is trusted to pick
+  // together, the tile color is a single independent choice with no partner
+  // color to check against.
+  function contrastColor(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.6 ? "#000000" : "#ffffff";
+  }
+
   function applyTheme(current) {
     containerEl.style.setProperty("--wallpaper-color", current.wallpaperColor);
     containerEl.style.setProperty("--text-color", current.textColor);
+    containerEl.style.setProperty("--site-color", current.siteColor);
+    containerEl.style.setProperty("--site-text-color", contrastColor(current.siteColor));
     trigger.style.color = current.textColor;
   }
 
@@ -152,5 +167,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderTopSites(current);
       loadWeather(current);
     },
+    onBannerChange: (visible) => caret.classList.toggle("is-banner", visible),
   });
 });

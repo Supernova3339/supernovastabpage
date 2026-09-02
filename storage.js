@@ -1,6 +1,7 @@
 export const DEFAULTS = {
   wallpaperColor: "#000000",
   textColor: "#ffffff",
+  siteColor: "#ffffff",
   location: "",
   locationLat: null,
   locationLon: null,
